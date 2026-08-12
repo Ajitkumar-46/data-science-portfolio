@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Student Result Calculator</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f0f0f0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .container {
+        background: #fff;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 0 15px rgba(0,0,0,0.2);
+        text-align: center;
+        width: 300px;
+    }
+
+    h2 {
+        margin-bottom: 20px;
+    }
+
+    input {
+        width: 90%;
+        padding: 8px;
+        margin: 10px 0;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    button {
+        background: blue;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 10px;
+    }
+
+    button:hover {
+        background: darkblue;
+    }
+
+    .result {
+        margin-top: 20px;
+        font-weight: bold;
+    }
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+    <h2>Student Result Calculator</h2>
+
+    <label>Enter Number of Subjects</label><br>
+    <input type="number" id="subjects" placeholder="Enter subjects"><br>
+
+    <div id="marksInputs"></div>
+
+    <button onclick="createInputs()">Next</button><br><br>
+    <button onclick="calculateResult()">Calculate Result</button>
+
+    <div class="result" id="output"></div>
+</div>
+
+<script>
+function createInputs() {
+    let num = document.getElementById("subjects").value;
+    let container = document.getElementById("marksInputs");
+    container.innerHTML = "";
+
+    for (let i = 1; i <= num; i++) {
+        container.innerHTML += `
+            <input type="number" placeholder="Enter marks for Subject ${i}" class="marks"><br>
+        `;
+    }
+}
+
+function calculateResult() {
+    let marks = document.querySelectorAll(".marks");
+    let total = 0;
+
+    marks.forEach(input => {
+        total += Number(input.value);
+    });
+
+    let avg = total / marks.length;
+    let grade = "";
+    let result = "";
+
+    if (avg >= 90) grade = "A+";
+    else if (avg >= 75) grade = "A";
+    else if (avg >= 60) grade = "B";
+    else if (avg >= 50) grade = "C";
+    else grade = "F";
+
+    result = avg >= 40 ? "PASS" : "FAIL";
+
+    document.getElementById("output").innerHTML = `
+        Total Marks: ${total} <br>
+        Average Marks: ${avg.toFixed(2)} <br>
+        Grade: ${grade} <br>
+        Result: ${result}
+    `;
+}
+</script>
+
+</body>
+</html>
